@@ -1,6 +1,11 @@
 ruby-tap-parser
 ===============
 
+[![Build Status](https://travis-ci.org/vincent-psarga/ruby-tap-parser.svg?branch=master)](https://travis-ci.org/vincent-psarga/ruby-tap-parser)
+[![Code Climate](https://codeclimate.com/github/vincent-psarga/ruby-tap-parser/badges/gpa.svg)](https://codeclimate.com/github/vincent-psarga/ruby-tap-parser)
+[![Test Coverage](https://codeclimate.com/github/vincent-psarga/ruby-tap-parser/badges/coverage.svg)](https://codeclimate.com/github/vincent-psarga/ruby-tap-parser)
+
+
 Gem to parse TAP (test anything protocol) output.
 
 Sample use
