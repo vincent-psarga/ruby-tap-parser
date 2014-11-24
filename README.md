@@ -23,7 +23,7 @@ Simply use ``TapParser::TapParser.from_text`` to get the content read:
     ].join ("\n")
     parser = TapParser::TapParser.from_text(tap)
 
-And then access ``parser.test_count`` to get the number of tests described in the plan and ``parser.test`` to get the tests result.
+And then access ``parser.test_count`` to get the number of tests described in the plan and ``parser.tests`` to get the tests result.
 Each entry in the list is a ``TapParser::Test`` object and has the following properties:
 
  - passed: a boolean telling if the test passed
