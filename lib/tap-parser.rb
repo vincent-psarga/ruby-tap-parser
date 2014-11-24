@@ -26,11 +26,10 @@ module TapParser
   class TapParser
     attr_reader :test_count, :tests
 
-    def self.from_file(path)
-    end
-
     def self.from_text(txt)
-      TapParser.new(txt)
+      parser = TapParser.new(txt)
+      parser.read_lines()
+      parser
     end
 
     def initialize(content)
@@ -39,12 +38,16 @@ module TapParser
       @tests = []
     end
 
+    def read_lines()
+      @content.split("\n").each {|l| read_line(l)}
+    end
+
     def read_line(line)
       /1\.\.(\d+)/.match(line) do |match|
         @test_count = match.captures[0].to_i
       end
 
-      /(?<status>ok|not ok)\s*(?<test_number>\d*)\s*(?<test_desc>[^#]*)(\s*#\s*(?<test_directive>.*))?/.match(line) do |match|
+      /(?<status>ok|not ok)\s*(?<test_number>\d*)\s*-?\s*(?<test_desc>[^#]*)(\s*#\s*(?<test_directive>.*))?/.match(line) do |match|
         @tests << Test.new(
           match[:status] == 'ok',
           match[:test_number] ? match[:test_number].to_i : nil,
