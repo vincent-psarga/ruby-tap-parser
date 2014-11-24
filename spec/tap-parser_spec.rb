@@ -1,5 +1,5 @@
-require 'tap-parser'
 require 'spec_helper'
+require 'tap-parser'
 
 describe TapParser::TapParser do
   it 'from_text' do
