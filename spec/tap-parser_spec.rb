@@ -1,9 +1,9 @@
 require 'tap-parser'
 
-describe TapParser do
+describe TapParser::TapParser do
   context 'read_line' do
     let(:parser) {
-      parser = TapParser.new('')
+      parser = TapParser::TapParser.new('')
     }
 
     it 'recognizes the plan' do
