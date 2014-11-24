@@ -8,6 +8,9 @@ describe TapParser::TapParser do
       '# need to ping 6 servers',
       'ok 2 - pinged diamond',
       'ok 3 - pinged ruby',
+      '    ---',
+      "     undefined local variable or method `x' for #<RSpec::ExampleGroups::TapParserTapParser::ReadLine:0x000000018d8140>'", 
+      '     ...',
       'not ok 4 - pinged saphire',
       'ok 5 - pinged onyx',
       'not ok 6 - pinged quartz',
@@ -34,6 +37,16 @@ describe TapParser::TapParser do
     ])
 
     expect(tests.first.diagnostic).to eq('need to ping 6 servers')
+    expect(tests[2].diagnostic).to eq([
+      '---',
+      "undefined local variable or method `x' for #<RSpec::ExampleGroups::TapParserTapParser::ReadLine:0x000000018d8140>'", 
+      '...'
+    ].join("\n"))
+
+    undiagnosed_tests = [tests[1], tests[3], tests[4], tests[5], tests[6]]
+    undiagnosed_tests.each do |test|
+      expect(test.diagnostic).to eq('')
+    end
   end
 
   context 'read_line' do

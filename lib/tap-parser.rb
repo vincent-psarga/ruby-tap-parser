@@ -45,6 +45,7 @@ module TapParser
     def read_line(line)
       /1\.\.(\d+)/.match(line) do |match|
         @test_count = match.captures[0].to_i
+        return
       end
 
       /(?<status>ok|not ok)\s*(?<test_number>\d*)\s*-?\s*(?<test_desc>[^#]*)(\s*#\s*(?<test_directive>.*))?/.match(line) do |match|
@@ -54,9 +55,10 @@ module TapParser
           match[:test_desc] ? match[:test_desc].strip : '',
           match[:test_directive]
         )
+        return
       end
 
-      /^\s*#\s*(?<test_diagnostic>.*)$/.match(line) do |match|
+      /^\s*#?\s*(?<test_diagnostic>.*)$/.match(line) do |match|
         unless @tests.empty?
           @tests.last.add_diagnostic(match[:test_diagnostic])
         end
