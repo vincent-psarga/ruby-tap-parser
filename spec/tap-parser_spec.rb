@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'tap-parser'
+require 'yaml'
 
 describe TapParser::TapParser do
   it 'from_text' do
@@ -39,13 +40,32 @@ describe TapParser::TapParser do
     expect(tests.first.diagnostic).to eq('need to ping 6 servers')
     expect(tests[2].diagnostic).to eq([
       '---',
-      "undefined local variable or method `x' for #<RSpec::ExampleGroups::TapParserTapParser::ReadLine:0x000000018d8140>'", 
-      '...'
+      "     undefined local variable or method `x' for #<RSpec::ExampleGroups::TapParserTapParser::ReadLine:0x000000018d8140>'"
     ].join("\n"))
 
     undiagnosed_tests = [tests[1], tests[3], tests[4], tests[5], tests[6]]
     undiagnosed_tests.each do |test|
       expect(test.diagnostic).to eq('')
+    end
+  end
+
+  context '.from_text' do
+    it 'handles nested YAML format' do
+      tap = %Q{TAP version 13
+not ok - yaml format
+  ---
+  error:
+    message: "nested yaml"
+  ...
+1..1}
+      parsed = TapParser::TapParser.from_text(tap)
+      expect(parsed.tests.first.diagnostic).to eq(%Q{---
+  error:
+    message: "nested yaml"})
+      expect(YAML.load(parsed.tests.first.diagnostic)).to have_key("error")
+      expect(YAML.load(parsed.tests.first.diagnostic)['error']).to have_key("message")
+      expect(YAML.load(parsed.tests.first.diagnostic)['error']['message']).to eq("nested yaml")
+
     end
   end
 

@@ -15,11 +15,13 @@ module TapParser
     end
 
     def add_diagnostic(line)
+      return if /\s*?\.\.\./.match(line)
       if @diagnostic.empty?
         @diagnostic = line
       else
         @diagnostic = "#{@diagnostic}\n#{line}"
       end
+      @diagnostic = @diagnostic.strip
     end
   end
 
@@ -58,7 +60,7 @@ module TapParser
         return
       end
 
-      /^\s*#?\s*(?<test_diagnostic>.*)$/.match(line) do |match|
+      /^(#\s*)?(?<test_diagnostic>.*)$/.match(line) do |match|
         unless @tests.empty?
           @tests.last.add_diagnostic(match[:test_diagnostic])
         end
