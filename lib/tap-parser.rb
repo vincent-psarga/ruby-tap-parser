@@ -50,7 +50,7 @@ module TapParser
         return
       end
 
-      /(?<status>ok|not ok)\s*(?<test_number>\d*)\s*-?\s*(?<test_desc>[^#]*)(\s*#\s*(?<test_directive>.*))?/.match(line) do |match|
+      /^(?<status>ok|not ok)\s*(?<test_number>\d*)\s*-?\s*(?<test_desc>[^#]*)(\s*#\s*(?<test_directive>.*))?/.match(line) do |match|
         @tests << Test.new(
           match[:status] == 'ok',
           match[:test_number] ? match[:test_number].to_i : nil,

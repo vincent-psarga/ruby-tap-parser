@@ -67,6 +67,24 @@ not ok - yaml format
       expect(YAML.load(parsed.tests.first.diagnostic)['error']['message']).to eq("nested yaml")
 
     end
+
+    it 'handles nested YAML format which may contain a "OK" within' do
+      tap = %Q{TAP version 13
+not ok - yaml format
+  ---
+  error:
+    message: "ok nested yaml"
+  ...
+1..1}
+      parsed = TapParser::TapParser.from_text(tap)
+      expect(parsed.tests.first.diagnostic).to eq(%Q{---
+  error:
+    message: "ok nested yaml"})
+      expect(YAML.load(parsed.tests.first.diagnostic)).to have_key("error")
+      expect(YAML.load(parsed.tests.first.diagnostic)['error']).to have_key("message")
+      expect(YAML.load(parsed.tests.first.diagnostic)['error']['message']).to eq("ok nested yaml")
+
+    end
   end
 
   context 'read_line' do
