@@ -1,3 +1,4 @@
+# encoding: UTF-8
 Gem::Specification.new do |s|
   s.name        = 'ruby-tap-parser'
   s.version     = '0.0.1'
