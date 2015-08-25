@@ -1,7 +1,7 @@
 # encoding: UTF-8
 Gem::Specification.new do |s|
   s.name        = 'ruby-tap-parser'
-  s.version     = '0.0.1'
+  s.version     = '0.1.0'
   s.date        = '2014-11-24'
   s.summary     = "TAP parser"
   s.description = "Parse TAP (Test Anything Protocol) output"
