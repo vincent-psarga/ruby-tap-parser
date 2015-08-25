@@ -134,6 +134,29 @@ not ok - yaml format
         expect(test.description).to eq('My test')
         expect(test.directive).to eq('It has a directive')
       end
+
+      context 'skipped tests' do
+        it 'are recognized' do
+          parser.read_line('ok 1 My test # Skipped: It has a directive')
+          test = parser.tests.first
+
+          expect(test.skipped).to be true
+        end
+
+        it 'are recognized even when using capital letters' do
+          parser.read_line('not ok 1 My test # SKIP It has a directive')
+          test = parser.tests.first
+
+          expect(test.skipped).to be true
+        end
+
+        it 'bu default, tests are not considered as skipped' do
+          parser.read_line('ok 1 My test # It has a directive')
+          test = parser.tests.first
+
+          expect(test.skipped).to be false
+        end
+      end
     end
 
     context 'handles diagnostic' do

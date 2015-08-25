@@ -1,6 +1,6 @@
 module TapParser
   class Test
-    attr_reader :passed, :number, :description, :directive, :diagnostic
+    attr_reader :passed, :skipped, :number, :description, :directive, :diagnostic
 
     def initialize(passed, number, description = '', directive = '', diagnostic = '')
       @passed = passed
@@ -8,6 +8,7 @@ module TapParser
       @description = description
       @directive = directive
       @diagnostic = diagnostic
+      @skipped = !(directive =~ /^skip.*/i).nil?
     end
 
     def failed

@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.1'
+ruby '2.2.0'
 
 group :development do
   gem 'rspec', '~> 3.0', '>= 3.0.0'
